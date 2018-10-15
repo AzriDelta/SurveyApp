@@ -25,7 +25,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".SurveyView"></activity>
+        <activity
+            android:name=".Main_load"
+            android:label="@string/title_activity_main_load"></activity>
     </application>
 
 </manifest>
