@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">First_try</string>
+    <string name="title_activity_main_load">Main_load</string>
+    <string name="title_home">Home</string>
+    <string name="title_survey">Survey</string>
+    <string name="title_notification">Notifications</string>
+    <string name="title_account">Account</string>
+
+    <string name="create_next_survey">Create your next survey and use the insights to make better decisions. </string>
+    <string name="create_survey">CREATE SURVEY</string>
+
+    <string name="acc">ACCOUNT</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="plan">Plan</string>
+    <string name="linked_acc">LINKED ACCOUNT</string>
+    <string name="remove">Remove</string>
+
 </resources>
