@@ -28,6 +28,8 @@
         <activity
             android:name=".Main_load"
             android:label="@string/title_activity_main_load"></activity>
+        <activity android:name=".SurveyView" />
+
     </application>
 
 </manifest>

@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,13 +27,15 @@
             android:layout_marginTop="34dp"
             android:layout_marginEnd="19dp"
             android:autoText="false"
+            android:fontFamily="casual"
             android:hint="Title of Survey"
             android:inputType=""
             android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:autoSizeTextType="uniform" />
+            android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
+            android:textColor="@color/colorBlack"
+            android:textSize="24sp"
+            app:autoSizeTextType="uniform"
+            tools:targetApi="lollipop" />
 
         <LinearLayout
             android:id="@+id/qna_layout"

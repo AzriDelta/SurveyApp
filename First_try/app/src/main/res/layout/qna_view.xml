@@ -17,10 +17,10 @@
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="casual"
         android:hint="Question appears here."
-        android:textAlignment="viewStart"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textAppearance="@android:style/TextAppearance.Material.Large.Inverse"
+        android:textColor="@color/colorBlack" />
 
     <EditText
         android:id="@+id/answer"
@@ -28,8 +28,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
         android:autofillHints="Your answer here."
+        android:fontFamily="casual"
         android:hint="Your answer"
         android:inputType="textMultiLine"
-        android:textColor="@android:color/white" />
+        android:textAppearance="@android:style/TextAppearance.Material.Large.Inverse"
+        android:textColor="@color/colorBlack" />
 
 </LinearLayout>
