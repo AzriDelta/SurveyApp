@@ -25,7 +25,7 @@ public class RecyclerViewSurveyList extends RecyclerView.Adapter <RecyclerViewSu
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_surveylist, parent, false);
+        View view = mInflater.inflate(R.layout.listview_surveylist, parent, false);
         return new ViewHolder(view);
     }
 
