@@ -13,7 +13,8 @@
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="plan">Plan</string>
+    <string name="age">Age</string>
+    <string name="faculty">Faculty</string>
     <string name="linked_acc">LINKED ACCOUNT</string>
     <string name="remove">Remove</string>
 

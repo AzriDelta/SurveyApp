@@ -177,9 +177,11 @@ public class SurveyApp extends AppCompatActivity implements GoogleApiClient.OnCo
                         String name = getdata();
 
                         if (task.isSuccessful()){
-                            sign_out.setVisibility(View.VISIBLE);
+                            //sign_out.setVisibility(View.VISIBLE);
                             signin.setVisibility(View.GONE);
-                            tvname.setText("Welcome "+name);
+                            //tvname.setText("Welcome "+name);
+                            Intent i = new Intent(SurveyApp.this, Main_load.class);
+                            startActivity(i);
 
                         }else {
                             Toast.makeText(SurveyApp.this,"Something went wrong",Toast.LENGTH_LONG).show();

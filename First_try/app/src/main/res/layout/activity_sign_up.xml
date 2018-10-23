@@ -1,30 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@drawable/darkblue"
+    >
 
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editText7"
         android:layout_width="255dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText4"
-        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="177dp"
         android:fontFamily="casual"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
+        android:hint="Faculty"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="204dp"
+        android:fontFamily="casual"
+        android:hint="Gmail"
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        android:visibility="visible" />
 
     <EditText
         android:id="@+id/editText5"
         android:layout_width="255dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText4"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="213dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="132dp"
         android:fontFamily="casual"
         android:hint="Password"
         android:inputType="textPassword"
@@ -36,11 +53,11 @@
         android:id="@+id/editText4"
         android:layout_width="255dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText2"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="148dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
         android:fontFamily="casual"
-        android:hint="Gmail"
+        android:hint="Age"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
         android:textStyle="bold"
@@ -50,10 +67,9 @@
         android:id="@+id/editText2"
         android:layout_width="255dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
         android:fontFamily="casual"
         android:hint="Username"
         android:textAllCaps="false"
@@ -65,11 +81,9 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="147dp"
-        android:layout_marginBottom="208dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="44dp"
         android:text="Sign Up" />
-
 
 </RelativeLayout>
