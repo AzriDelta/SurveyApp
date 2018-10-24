@@ -17,5 +17,6 @@
     <string name="faculty">Faculty</string>
     <string name="linked_acc">LINKED ACCOUNT</string>
     <string name="remove">Remove</string>
+    <string name="welcome">Welcome!</string>
 
 </resources>
