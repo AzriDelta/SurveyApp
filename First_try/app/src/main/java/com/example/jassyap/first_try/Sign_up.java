@@ -38,7 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Sign_up extends AppCompatActivity{
 
-    private EditText editText2, editText4, editText5, editText;
+    private EditText editText2, editText4, editText5, editText6, editText7;
     private Button button;
     private FirebaseAuth firebaseAuth;
 
@@ -48,11 +48,12 @@ public class Sign_up extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        //databaseReference = FirebaseDatabase.getInstance().getReference("Sign up info");
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
         editText2 = (EditText)findViewById(R.id.editText2);
         editText4 = (EditText)findViewById(R.id.editText4);
         editText5 = (EditText)findViewById(R.id.editText5);
-        editText = (EditText)findViewById(R.id.editText);
+        editText6 = (EditText)findViewById(R.id.editText6);
+        editText7 = (EditText)findViewById(R.id.editText7);
         firebaseAuth = FirebaseAuth.getInstance();
         button = (Button)findViewById(R.id.button);
 
@@ -68,7 +69,7 @@ public class Sign_up extends AppCompatActivity{
     }
     public void addSignUpInfo(){
 
-        (firebaseAuth.createUserWithEmailAndPassword(editText4.getText().toString(), editText5.getText().toString())).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        (firebaseAuth.createUserWithEmailAndPassword(editText6.getText().toString(), editText5.getText().toString())).addOnCompleteListener(Sign_up.this,new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -83,27 +84,27 @@ public class Sign_up extends AppCompatActivity{
             }
         });
 
+        String id = firebaseAuth.getCurrentUser().getUid();
+        String name = editText2.getText().toString();
+        String age = editText4.getText().toString();
+        String password = editText5.getText().toString();
+        String gmail = editText6.getText().toString();
+        String faculty = editText7.getText().toString();
 
-        //String name = editText2.getText().toString();
-        //String gmail = editText4.getText().toString();
-        //String password = editText5.getText().toString();
-        //String comfirmPassword = editText.getText().toString();
+        if (!TextUtils.isEmpty(name) && (!TextUtils.isEmpty(gmail) && (!TextUtils.isEmpty(password) && (!TextUtils.isEmpty(age)) && (!TextUtils.isEmpty(faculty))))){
 
-        //if (!TextUtils.isEmpty(name) && (!TextUtils.isEmpty(gmail) && (!TextUtils.isEmpty(password) && (!TextUtils.isEmpty(comfirmPassword))))){
-
-           // String id = databaseReference.push().getKey();
-
-            //Sign_up_info sign_up_info= new Sign_up_info(name, gmail, password,comfirmPassword);
-            //databaseReference.child(id).setValue(sign_up_info);
-            //editText2.setText("");
-            //editText4.setText("");
-            //editText5.setText("");
-            //editText.setText("");
+            users sign_up_info= new users(name, gmail, password,age,faculty);
+            databaseReference.child(id).setValue(sign_up_info);
+            editText2.setText("");
+            editText4.setText("");
+            editText5.setText("");
+            editText6.setText("");
+            editText7.setText("");
 
 
 
-        //}else{
-            //Toast.makeText(Sign_up.this, "Please type name, email, password", Toast.LENGTH_LONG).show();
-        //}
+        }else{
+            Toast.makeText(Sign_up.this, "Please type name, email, password", Toast.LENGTH_LONG).show();
+        }
     }
 }
