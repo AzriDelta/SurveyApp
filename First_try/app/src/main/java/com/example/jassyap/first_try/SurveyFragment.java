@@ -37,7 +37,7 @@ public class SurveyFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("questionnaire");
         final ArrayList<String> list = new ArrayList<>();
-        final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_info,R.id.surveyTitle,list);
+        final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_info,R.id.noti_surveyTitle,list);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

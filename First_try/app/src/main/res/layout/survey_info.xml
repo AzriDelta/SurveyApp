@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/surveyTitle"
+        android:id="@+id/noti_surveyTitle"
         android:textSize="20sp"
         android:textStyle="normal"
         android:layout_width="match_parent"
