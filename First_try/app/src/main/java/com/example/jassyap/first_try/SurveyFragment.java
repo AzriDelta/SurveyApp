@@ -36,8 +36,11 @@ public class SurveyFragment extends Fragment {
 
         final ListView listView = (ListView) view.findViewById(R.id.lview);
         final ArrayList<String> list = new ArrayList<>();
-        final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_info,R.id.generate_surveyTitle,list);
-        ref.addValueEventListener(new ValueEventListener() {
+        final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_info,R.id.surveyTitle,list);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 users userProfile = dataSnapshot.getValue(users.class);

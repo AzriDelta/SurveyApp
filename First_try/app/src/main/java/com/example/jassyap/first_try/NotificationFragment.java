@@ -49,7 +49,7 @@ public class NotificationFragment extends Fragment {
 
 
         list = new ArrayList<>();
-        listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_title_view,R.id.generate_surveyTitle,list);
+        listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_title_view,R.id.surveyTitle,list);
 
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -101,7 +101,7 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                String selected = ((TextView) view.findViewById(R.id.generate_surveyTitle)).getText().toString();
+                String selected = ((TextView) view.findViewById(R.id.surveyTitle)).getText().toString();
                 Toast.makeText(getActivity(), "You have clicked on " + selected, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getActivity(), SurveyView.class);

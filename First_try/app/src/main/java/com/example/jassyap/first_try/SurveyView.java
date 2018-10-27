@@ -39,7 +39,7 @@ public class SurveyView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_view);
         qnalayout = findViewById(R.id.qna_layout);
-        surveyTitle = findViewById(R.id.generate_surveyTitle);
+        surveyTitle = findViewById(R.id.surveyTitle);
         submit = findViewById(R.id.submit);
 
         this.title = getIntent().getStringExtra("title");

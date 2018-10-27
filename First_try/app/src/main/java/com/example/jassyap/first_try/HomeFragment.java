@@ -2,8 +2,10 @@ package com.example.jassyap.first_try;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -67,8 +70,33 @@ public class HomeFragment extends Fragment {
         questionnaireRef = myRef.child("questionnaire");
 
         mNotificationManager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
+
+        Button button = (Button)v.findViewById(R.id.button4);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                alert.setTitle("Create New Survey");
+                alert.setMessage("Do you want to create a new survey?");
+                alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Intent intent = new Intent(getActivity(), NewSurvey.class);
+                        //startActivity(intent);
+                    }
+                });
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                alert.show();
+            }
+        });
+        //commented - because no need to show the listview for open survey anymore
         //number_survey_open = 0;
-        questionnaireRef.orderByChild("created_date").addValueEventListener(new ValueEventListener() {
+        /*questionnaireRef.orderByChild("created_date").addValueEventListener(new ValueEventListener() {
             @SuppressLint("LongLogTag")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -168,7 +196,7 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
 
             }
-        });
+        }); */
 
         return v;
     }
