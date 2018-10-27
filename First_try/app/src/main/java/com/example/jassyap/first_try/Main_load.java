@@ -14,6 +14,7 @@ public class Main_load extends AppCompatActivity {
 
     private HomeFragment homeFragment;
     private NotificationFragment notifcationFragment;
+    private GenerateReportFragment generatereportFragment;
     private SurveyFragment surveyFragment;
     private AccountFragment accountFragment;
 
@@ -30,7 +31,8 @@ public class Main_load extends AppCompatActivity {
                     setFragment(surveyFragment);
                     return true;
                 case R.id.navigation_notifications:
-                    setFragment(notifcationFragment);
+                    //setFragment(notifcationFragment);
+                    setFragment(generatereportFragment);
                     return true;
                 case R.id.navigation_account:
                     setFragment(accountFragment);
@@ -49,6 +51,7 @@ public class Main_load extends AppCompatActivity {
         surveyFragment = new SurveyFragment();
         notifcationFragment = new NotificationFragment();
         accountFragment = new AccountFragment();
+        generatereportFragment = new GenerateReportFragment();
 
         setFragment(homeFragment);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.main_nav);

@@ -4,14 +4,19 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,37 +24,37 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.functions.FirebaseFunctions;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
 
-public class SurveyExport extends AppCompatActivity {
+public class GenerateReportFragment extends Fragment {
 
-    private Button generate;
-    private FirebaseFunctions mFunctions;
+;
     private static final String TAG = "";
     private DatabaseReference myRef, questionnaireRef, questionRef;
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
     private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
     private LineSeparator lineSeparator = new LineSeparator();
+    private int number_survey_open = 0;
+    private String qid;
+    private ArrayMap<String, String> arrayMap = new ArrayMap<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey_export);
+    public GenerateReportFragment () {
+        // Required empty public constructor
+    }
 
-        generate = this.findViewById(R.id.generate);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_generatereport, container, false);
 
         myRef = FirebaseDatabase.getInstance().getReference();
         questionnaireRef = FirebaseDatabase.getInstance().getReference().child("questionnaire");
@@ -57,7 +62,63 @@ public class SurveyExport extends AppCompatActivity {
 
         lineSeparator.setLineColor(new BaseColor(0, 0, 0, 68));
 
-        generate.setOnClickListener(new View.OnClickListener() {
+        final ListView listView = view.findViewById(R.id.lvSurveyTitleGenerate);
+        final ArrayList<String> list = new ArrayList<>();
+        final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.generateresponse_info,R.id.generate_surveyTitle,list);
+
+
+        questionnaireRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //clear the list to refresh listview, restart from 0, then fill it with new datas
+                list.clear();
+                number_survey_open = 0;
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    //only get questionnaire with open status
+
+                    if (("open").matches(ds.child("status").getValue().toString())) {
+                        questionnaire survey = ds.getValue(questionnaire.class);
+                        list.add(survey.getTitle());
+
+                        arrayMap.put(ds.child("title").getValue().toString(), ds.getKey());
+
+                        Log.d(TAG, "QID: " + ds.getKey());
+                        Log.d(TAG, "Title: " + ds.child("title").getValue().toString());
+
+                        number_survey_open++;
+                    }
+                }
+
+                //listViewAdapter.clear();
+                listViewAdapter.notifyDataSetChanged();
+                listView.setAdapter(listViewAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        listView.setAdapter(listViewAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView adapterView, View view, int position, long l) {
+
+                //get the title of questionnaire
+                String selected = ((TextView) view.findViewById(R.id.generate_surveyTitle)).getText().toString();
+                String qid_i = arrayMap.get(selected);
+                Toast.makeText(getActivity(), "Generating " + selected + ".pdf", Toast.LENGTH_SHORT).show();
+                checkPermission(qid_i);
+
+
+            }
+        });
+
+        /*listView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -67,7 +128,9 @@ public class SurveyExport extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        });
+        }); */
+
+        return view;
     }
 
     private void printReport(final String qid){
@@ -113,7 +176,7 @@ public class SurveyExport extends AppCompatActivity {
 
                 // finish the page
                 document.close();
-                Toast.makeText(getApplicationContext(), "Done creating " + title + ".pdf", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Done creating " + title + ".pdf", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -126,15 +189,15 @@ public class SurveyExport extends AppCompatActivity {
 
     }
 
-    private void checkPermission() throws IOException, DocumentException {
+    private void checkPermission(String qid) {
         // Permission is not granted,
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=PackageManager.PERMISSION_GRANTED) {
-        //so let's ask permisison
-            ActivityCompat.requestPermissions(SurveyExport.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=PackageManager.PERMISSION_GRANTED) {
+        //so let's ask permission
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
         //already got the permission
         else {
-            printReport("1");
+            printReport(qid);
         }
 
     }
@@ -154,7 +217,7 @@ public class SurveyExport extends AppCompatActivity {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(SurveyExport.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }

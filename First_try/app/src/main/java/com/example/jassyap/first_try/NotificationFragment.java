@@ -1,13 +1,9 @@
 package com.example.jassyap.first_try;
 
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 /**
@@ -55,7 +48,7 @@ public class NotificationFragment extends Fragment {
         DatabaseReference myRef = database.getReference();
 
         list = new ArrayList<>();
-        listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_title_view,R.id.noti_surveyTitle,list);
+        listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_title_view,R.id.generate_surveyTitle,list);
 
         //sort by created_date
         //not finished yet
@@ -93,7 +86,7 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                String selected = ((TextView) view.findViewById(R.id.noti_surveyTitle)).getText().toString();
+                String selected = ((TextView) view.findViewById(R.id.generate_surveyTitle)).getText().toString();
                 Toast.makeText(getActivity(), "You have clicked on " + selected, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getActivity(), SurveyView.class);

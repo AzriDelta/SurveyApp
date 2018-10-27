@@ -28,7 +28,7 @@
 
         <activity android:name=".Main_load" />
         <activity android:name=".SurveyView" />
-        <activity android:name=".SurveyExport" />
+        <activity android:name=".GenerateReportFragment" />
     </application>
 
 </manifest>
