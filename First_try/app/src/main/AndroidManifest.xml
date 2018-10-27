@@ -3,6 +3,7 @@
     package="com.example.jassyap.first_try">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main_load">
+        <activity android:name=".SurveyApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,9 +26,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".SurveyApp" />
+        <activity android:name=".Main_load" />
         <activity android:name=".SurveyView" />
-
+        <activity android:name=".SurveyExport" />
     </application>
 
 </manifest>

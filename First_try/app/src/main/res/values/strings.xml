@@ -18,5 +18,6 @@
     <string name="linked_acc">LINKED ACCOUNT</string>
     <string name="remove">Remove</string>
     <string name="welcome">Welcome!</string>
+    <string name="title_activity_survey_export">SurveyExport</string>
 
 </resources>
