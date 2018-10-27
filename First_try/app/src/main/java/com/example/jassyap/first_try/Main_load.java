@@ -16,6 +16,7 @@ public class Main_load extends AppCompatActivity {
     private NotificationFragment notifcationFragment;
     private SurveyFragment surveyFragment;
     private AccountFragment accountFragment;
+    private ResponseFragment responseFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -35,6 +36,9 @@ public class Main_load extends AppCompatActivity {
                 case R.id.navigation_account:
                     setFragment(accountFragment);
                     return true;
+                case R.id.navigation_response:
+                    setFragment(responseFragment);
+                    return true;
             }
             return false;
         }
@@ -49,6 +53,7 @@ public class Main_load extends AppCompatActivity {
         surveyFragment = new SurveyFragment();
         notifcationFragment = new NotificationFragment();
         accountFragment = new AccountFragment();
+        responseFragment = new ResponseFragment();
 
         setFragment(homeFragment);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.main_nav);
