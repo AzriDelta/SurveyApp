@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,18 +35,35 @@ public class SurveyFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_survey, container, false);
 
         final ListView listView = (ListView) view.findViewById(R.id.lview);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("questionnaire");
         final ArrayList<String> list = new ArrayList<>();
         final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_info,R.id.generate_surveyTitle,list);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    questionnaire survey = ds.getValue(questionnaire.class);
-                    list.add(survey.getTitle().toString());
-                }
-                listView.setAdapter(listViewAdapter);
+                users userProfile = dataSnapshot.getValue(users.class);
+                final String username = userProfile.getName().toString();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("questionnaire");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        list.clear();
+
+                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+
+                            if (username.matches(ds.child("creator_name").getValue().toString())) {
+                                questionnaire survey = ds.getValue(questionnaire.class);
+                                list.add(survey.getTitle());
+                            }
+                        }
+                        listView.setAdapter(listViewAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
 
             @Override

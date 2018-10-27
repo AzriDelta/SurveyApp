@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,38 +46,52 @@ public class NotificationFragment extends Fragment {
         final ListView listView = view.findViewById(R.id.lv_noti_surveyTitle);
 
         database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
+
 
         list = new ArrayList<>();
         listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_title_view,R.id.generate_surveyTitle,list);
 
-        //sort by created_date
-        //not finished yet
-        myRef.child("questionnaire").addValueEventListener(new ValueEventListener() {
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                users userProfile = dataSnapshot.getValue(users.class);
+                final String username = userProfile.getName().toString();
+                final int age = Integer.parseInt(userProfile.getAge().toString());
 
-                //clear the list to refresh listview, restart from 0, then fill it with new datas
-                list.clear();
+                //
+                DatabaseReference myRef = database.getReference();
+                myRef.child("questionnaire").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //clear the list to refresh listview, restart from 0, then fill it with new datas
+                        list.clear();
 
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    //only get questionnaire with open status
+                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                            //only get questionnaire with open status and fulfil requirements
+                            if (("open").matches(ds.child("status").getValue().toString())&& !username.matches(ds.child("creator_name").getValue().toString()) && Integer.parseInt((ds.child("requirements").child("age_max").getValue().toString())) > (age) && Integer.parseInt((ds.child("requirements").child("age_min").getValue().toString())) < (age)) {
+                                questionnaire survey = ds.getValue(questionnaire.class);
+                                list.add(survey.getTitle());
+                            }
+                        }
+                        listView.setAdapter(listViewAdapter);
 
-                    if (("open").matches(ds.child("status").getValue().toString())) {
-                        questionnaire survey = ds.getValue(questionnaire.class);
-                        list.add(survey.getTitle());
                     }
-                }
-                listView.setAdapter(listViewAdapter);
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
         });
 
         listView.setAdapter(listViewAdapter);
