@@ -81,8 +81,8 @@ public class HomeFragment extends Fragment {
                 alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //Intent intent = new Intent(getActivity(), NewSurvey.class);
-                        //startActivity(intent);
+                        Intent intent = new Intent(getActivity(), PlanSelection.class);
+                        startActivity(intent);
                     }
                 });
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
