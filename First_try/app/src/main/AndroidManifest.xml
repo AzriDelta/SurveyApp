@@ -29,6 +29,20 @@
         <activity android:name=".Main_load" />
         <activity android:name=".SurveyView" />
         <activity android:name=".GenerateReportFragment" />
+        <activity
+            android:name=".PlanSelection"
+            android:parentActivityName=".Main_load" />
+        <activity android:name=".FreePlan"
+            android:parentActivityName=".PlanSelection"/>
+        <activity
+            android:name=".PremiumPlan"
+            android:parentActivityName=".PlanSelection" />
+        <activity
+            android:name=".FreeSurvey"
+            android:parentActivityName=".Main_load" />
+        <activity
+            android:name=".PremiumSurvey"
+            android:parentActivityName=".Main_load" />
     </application>
 
 </manifest>
