@@ -1,9 +1,13 @@
 package com.example.jassyap.first_try;
 
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 /**
@@ -49,7 +56,7 @@ public class NotificationFragment extends Fragment {
 
 
         list = new ArrayList<>();
-        listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_title_view,R.id.surveyTitle,list);
+        listViewAdapter = new ArrayAdapter<String>(getActivity(),R.layout.survey_title_view,R.id.noti_surveyTitle,list);
 
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -71,7 +78,7 @@ public class NotificationFragment extends Fragment {
 
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             //only get questionnaire with open status and fulfil requirements
-                            if (("open").matches(ds.child("status").getValue().toString())&& !username.matches(ds.child("creator_name").getValue().toString()) && Integer.parseInt((ds.child("requirements").child("age_max").getValue().toString())) > (age) && Integer.parseInt((ds.child("requirements").child("age_min").getValue().toString())) < (age)) {
+                            if (("open").matches(ds.child("status").getValue().toString())&& !username.matches(ds.child("creator_name").getValue().toString()) && Integer.parseInt((ds.child("age_max").getValue().toString())) > (age) && Integer.parseInt((ds.child("age_min").getValue().toString())) < (age)) {
                                 questionnaire survey = ds.getValue(questionnaire.class);
                                 list.add(survey.getTitle());
                             }
@@ -101,7 +108,7 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                String selected = ((TextView) view.findViewById(R.id.surveyTitle)).getText().toString();
+                String selected = ((TextView) view.findViewById(R.id.noti_surveyTitle)).getText().toString();
                 Toast.makeText(getActivity(), "You have clicked on " + selected, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getActivity(), SurveyView.class);
